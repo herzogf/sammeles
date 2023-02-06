@@ -5,8 +5,13 @@ import "time"
 // identifier for types of things.
 // e.g. group=herzog.fyi, type=postcard, schemaVersion=1
 type TypeIdentifier struct {
+	// a group is a domain name, e.g. herzog.fyi, optionally with a path, e.g. herzog.fyi/sammeles
 	Group           string         `json:"id"`
+	// the type of the thing, e.g. postcard.
+	// should be short (often only one word) and not contain spaces or special characters besides _ and -
 	Type    string      `json:"type"`
+	// the schema version of the thing, e.g. 1.
+	// the version is monotonically increasing and signals major changes to the type, possibly breaking backwards compatibility
 	SchemaVersion    uint      `json:"schemaVersion"`
 	
 }

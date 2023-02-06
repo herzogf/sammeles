@@ -11,7 +11,7 @@ type Permission struct {
 }
 
 type PermissionData struct {
-	Username     string         `json:"username,omitempty"`
+	UserId     string         `json:"userId,omitempty"`
 	CollectionId string         `json:"collectionId,omitempty"`
 	Type         PermissionType `json:"type,omitempty"`
 }
