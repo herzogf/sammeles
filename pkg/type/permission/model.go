@@ -1,4 +1,4 @@
-package permissions
+package permission
 
 import (
 	"github.com/herzogf/sammeles/pkg/common"

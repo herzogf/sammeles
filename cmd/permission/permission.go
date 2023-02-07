@@ -1,8 +1,21 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
 
-// main function which outputs the sum of 2 numbers.
+	"github.com/gin-gonic/gin"
+	"github.com/herzogf/sammeles/pkg/type/permission"
+)
+
+// main function for the permission type / service
 func main() {
-	fmt.Println("Hello World")
+	router := gin.Default()
+
+	typeIdentifier := permission.TypeIdentifier()
+	routes := router.Group("/api/types/" + typeIdentifier.Group)
+	routes.GET("/" + typeIdentifier.Type + "/entries", permission.GetAllPermissions)
+	routes.GET("/" + permission.TypePlural + "/entries", permission.GetAllPermissions)
+
+	router.Run(":8080")
+	fmt.Println("Serving type 'permission' on port 8080")
 }
