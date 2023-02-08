@@ -20,15 +20,13 @@ type ThingMetadata struct {
 	UID        UID    `json:"uThingid,omitempty"`
 	Name       string `json:"name,omitempty"`
 	Generation int64  `json:"generation,omitempty"`
-	// reference to the thing that owns this (sub-) thing, i.e. the root thing
-	// is only empty for root things - in this case the Collections list must NOT be empty
-	OwnerThingRef string `json:"ownerThingRef,omitempty"`
-	// reference to the direct parent (sub-) thing
+	// reference to the direct parent (sub-) thing.
+	// this is empty for root things.
 	ParentRef         string    `json:"parentRef,omitempty"`
 	CreationTimestamp time.Time `json:"creationTimestamp,omitempty"`
 	UpdateTimestamp   time.Time `json:"updateTimestamp,omitempty"`
-	// must be set for root things and reference at least one collection.
-	// for sub-things, the collections list must be empty (only root things can be in a collection)
+	// collections that this (sub) thing belongs to.
+	// for sub-things this will be synced eventually with the collections of the root thing (eventual consistency)
 	Collections []UID             `json:"collections,omitempty"`
 	Annotations map[string]string `json:"annotations,omitempty"`
 }
