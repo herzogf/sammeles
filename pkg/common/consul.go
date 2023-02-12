@@ -81,3 +81,29 @@ func getHostname() (string) {
 	}
 	return hostname
 }
+
+// the following function deregisters the type/service from consul
+func (c *ConsulClient) DeregisterType(typeIdentifier TypeIdentifier) error {
+	hostname := getHostname()
+	id := fmt.Sprintf("type/%s/%s/%d/%s", typeIdentifier.Group, typeIdentifier.Type, typeIdentifier.SchemaVersion, hostname)
+	if err := c.Agent().ServiceDeregister(id); err != nil {
+		log.Fatal("error deregistering service: ", err)
+	}
+
+	log.Println("deregistered service: ", id)
+
+	return nil
+}
+
+func DeregisterOneAndOnlyType(typeIdentifier TypeIdentifier) {
+	consulClient, err := NewClient(os.Getenv("CONSUL_ADDRESS"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err := consulClient.DeregisterType(typeIdentifier); err != nil {
+		log.Fatal(err)
+	}
+
+	log.Printf("deregistered type '%s' from consul\n", typeIdentifier.Type)
+}
