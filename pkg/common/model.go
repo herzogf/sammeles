@@ -5,7 +5,7 @@ import "time"
 // identifier for types of things.
 // e.g. group=herzog.fyi, type=postcard, schemaVersion=1
 type TypeIdentifier struct {
-	// a group is a domain name, e.g. herzog.fyi, optionally with a path, e.g. herzog.fyi/sammeles
+	// a group is a domain name, e.g. herzog.fyi
 	Group string `json:"id"`
 	// the type of the thing, e.g. postcard.
 	// should be short (often only one word) and not contain spaces or special characters besides _ and -

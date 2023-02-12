@@ -9,3 +9,7 @@ import (
 func GetAllPermissions(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, permissions)
 }
+
+func GetHealth(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, gin.H{"status": "ok"})
+}

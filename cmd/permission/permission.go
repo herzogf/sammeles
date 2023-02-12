@@ -2,8 +2,12 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/herzogf/sammeles/pkg/common"
 	"github.com/herzogf/sammeles/pkg/type/permission"
 )
 
@@ -16,6 +20,23 @@ func main() {
 	routes.GET("/" + typeIdentifier.Type + "/entries", permission.GetAllPermissions)
 	routes.GET("/" + permission.TypePlural + "/entries", permission.GetAllPermissions)
 
-	router.Run(":8080")
-	fmt.Println("Serving type 'permission' on port 8080")
+	router.GET("/health", permission.GetHealth)
+
+	port := getPort()
+	common.RegisterOneAndOnlyType(permission.TypeIdentifier(), port)
+
+	router.Run(fmt.Sprintf(":%d", port))
+	fmt.Printf("Serving type 'permission' on port %d\n", port)
+}
+
+func getPort() int {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	p, err := strconv.Atoi(port)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return p
 }
