@@ -35,6 +35,7 @@ func (c *ConsulClient) RegisterType(typeIdentifier TypeIdentifier, port int) err
 	check := &api.AgentServiceCheck{
 		Interval: "10s",
 		Timeout:  "1s",
+		DeregisterCriticalServiceAfter: "1m",
 		HTTP:     fmt.Sprintf("http://%s:%d/health", hostname, port),
 	}
 
