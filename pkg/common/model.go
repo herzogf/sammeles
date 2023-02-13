@@ -17,7 +17,8 @@ type TypeIdentifier struct {
 
 // metadata for every (sub) thing, heavily inspired by https://pkg.go.dev/golang.org/x/build/kubernetes/api#ObjectMeta
 type ThingMetadata struct {
-	UID        UID    `json:"uThingid,omitempty"`
+	UID UID `json:"uid,omitempty"`
+	// human-readable name of the thing (can contain spaces etc. as it is not used for identification)
 	Name       string `json:"name,omitempty"`
 	Generation int64  `json:"generation,omitempty"`
 	// reference to the direct parent (sub-) thing.
@@ -33,3 +34,10 @@ type ThingMetadata struct {
 
 // every (sub) thing has to have a UID but the UID format is up to the type (i.e. every microservice can choose its own UID implementation)
 type UID string
+
+// identifier for a specific single thing, e.g. group=sammeles.herzog.fyi, type=postcard, uid=abc123
+type ThingIdentifier struct {
+	Group string `json:"group,omitempty"`
+	Type  string `json:"type,omitempty"`
+	UID   UID    `json:"uid,omitempty"`
+}

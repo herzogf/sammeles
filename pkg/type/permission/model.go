@@ -20,6 +20,10 @@ type PermissionData struct {
 type PermissionType string
 
 const (
+	// read for the collection
 	Read  PermissionType = "read"
+	// read + write for the collection
 	Write PermissionType = "write"
+	// write + create/delete permissions for the collection
+	Admin PermissionType = "admin"
 )
