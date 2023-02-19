@@ -2,8 +2,6 @@ module github.com/herzogf/sammeles
 
 go 1.19
 
-require gorm.io/gorm v1.24.5
-
 require (
 	github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da // indirect
 	github.com/fatih/color v1.9.0 // indirect
@@ -39,6 +37,5 @@ require (
 require (
 	github.com/gin-gonic/gin v1.8.2
 	github.com/hashicorp/consul/api v1.18.0
-	github.com/jinzhu/inflection v1.0.0 // indirect
-	github.com/jinzhu/now v1.1.4 // indirect
+	golang.org/x/exp v0.0.0-20230213192124-5e25df0256eb
 )

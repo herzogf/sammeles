@@ -108,3 +108,39 @@ func DeregisterOneAndOnlyType(typeIdentifier TypeIdentifier) {
 
 	log.Printf("deregistered type '%s' from consul\n", typeIdentifier.Type)
 }
+
+// find a service based on the type identifier in ConsulClient
+func (c *ConsulClient) FindTypeServiceUrl(typeIdentifier TypeIdentifier) (string, error) {
+	name := fmt.Sprintf("type/%s/%s/%d", typeIdentifier.Group, typeIdentifier.Type, typeIdentifier.SchemaVersion)
+
+	filterString := fmt.Sprintf("Service == \"%s\"", name)
+	services := c.findServicesWithFilter(filterString)
+
+	for _, service := range services {
+		address := service.Address
+		port := service.Port
+		url := fmt.Sprintf("http://%s:%v/api/types/%s/%s", address, port, typeIdentifier.Group, typeIdentifier.Type)
+	
+		return url, nil
+	}
+
+	return "", fmt.Errorf("no services found for type '%s'", name)
+}
+
+func FindTypeServiceUrl(typeIdentifier TypeIdentifier) (string, error) {
+	consulClient, err := NewClient(os.Getenv("CONSUL_ADDRESS"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return consulClient.FindTypeServiceUrl(typeIdentifier)
+}
+
+func (c *ConsulClient) findServicesWithFilter(filter string) map[string]*api.AgentService {
+	services, err := c.Agent().ServicesWithFilter(filter)
+	if err != nil {
+		log.Fatal("error finding services in consul: ", err)
+	}
+
+	return services
+}
