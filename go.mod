@@ -36,6 +36,6 @@ require (
 
 require (
 	github.com/gin-gonic/gin v1.8.2
-	github.com/hashicorp/consul/api v1.18.0
+	github.com/hashicorp/consul/api v1.19.1
 	golang.org/x/exp v0.0.0-20230213192124-5e25df0256eb
 )
